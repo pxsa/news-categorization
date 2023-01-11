@@ -15,6 +15,3 @@ stops = "\n".join(
         )
     )
 )
-print stops
-
-codecs.open('out', 'w', encoding='utf-8').write(stops)
