@@ -84,6 +84,6 @@ def check(content):
 
 
 st.title("News Classification")
-
+content = st.text_area("news content")
 if st.button("ok"):
-    check(st.text_area("news content"))
+    check(content)
