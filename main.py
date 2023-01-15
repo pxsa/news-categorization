@@ -65,12 +65,12 @@ y_train = trainDF.category.values
 y_test  = testDF.category.values
 
 # Model
-svc    = SVC().fit(x_train, y_train)
-y_pred = svc.predict(x_test)
+svc = SVC()
+def createModel():
+    svc = svc.fit(x_train, y_train)
 
 # Check
 def check(content):
-    # news = "این یک خبر دروغ و سیاسی است که امریکا به ایران حمله کرده است"
     data = {'content': content}
     df_predict = pd.DataFrame(data, index=[0])
 
@@ -84,6 +84,11 @@ def check(content):
 
 
 st.title("News Classification")
+agree = st.checkbox('Train model')
 content = st.text_area("news content")
+if agree:
+    createModel()
+    st.write("model trained successfully")
+    
 if st.button("ok"):
     check(content)
