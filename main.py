@@ -65,30 +65,33 @@ y_train = trainDF.category.values
 y_test  = testDF.category.values
 
 # Model
-svc = SVC()
-def createModel():
-    svc = svc.fit(x_train, y_train)
+def createModel(x, y):
+    return SVC().fit(x, y)
 
 # Check
-def check(content):
-    data = {'content': content}
-    df_predict = pd.DataFrame(data, index=[0])
+def check(content, svc):
+    if svc:
+        data = {'content': content}
+        df_predict = pd.DataFrame(data, index=[0])
 
-    df_predict.content  = removeUnnecessaryChars(df_predict)
-    sampleTest  = vectorizer.transform(df_predict.content.values)
-    sample_x_test  = feature_selector.transform(sampleTest)
+        df_predict.content  = removeUnnecessaryChars(df_predict)
+        sampleTest  = vectorizer.transform(df_predict.content.values)
+        sample_x_test  = feature_selector.transform(sampleTest)
 
-    category = svc.predict(sample_x_test)
-    st.write(category)
+        category = svc.predict(sample_x_test)
+        st.write(category)
+    else:
+        st.write("please train model first")
 
 
 
 st.title("News Classification")
 agree = st.checkbox('Train model')
 content = st.text_area("news content")
+svc = None
 if agree:
-    createModel()
+    svc = createModel(x_train, y_train)
     st.write("model trained successfully")
     
 if st.button("ok"):
-    check(content)
+    check(content, svc)
